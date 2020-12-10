@@ -217,9 +217,11 @@ class POPUP extends HTMLElement {
                 }
             }
         }
+        this.popup_next()
         this.$popup.style.display = "none"
         this.$popup.remove()
-        this.popup_next()
+        this.clear_shadow_root(this.shadowRoot)
+        this.remove()
     }
 
     connectedCallback() {
@@ -323,6 +325,7 @@ class POPUP extends HTMLElement {
             this._callback = callback
         }
 
+        this.$btn_ok.focus()
         if (typeof(data_config?.type) == "undefined" || data_config?.type == "alert") {
             this.$btn_cancel.style.display = "none"
         } else if (typeof(data_config?.type) != "undefined" && data_config?.type == "prompt") {
@@ -344,6 +347,31 @@ class POPUP extends HTMLElement {
                 })
             }
             this.$input = selectorInput
+        }
+
+        if (this.$input.length == 1) {
+            this.$input[0].addEventListener("keypress", e => {
+                if (e.key === 'Enter') {
+                    this.$btn_ok.click()
+                }
+            })
+        }
+
+        if (typeof(data_config?.theme) != "undefined" && data_config?.theme == "dark") {
+            this.$popup.style.background = "#323a40"
+            this.$popup.style.color = "#fff"
+            this.$title.style.color = "#fff"
+            this.$body.style.color = "#fff"
+            this.$btn_ok.style.borderColor = "#ccc"
+            this.$btn_ok.style.background = "#206aec"
+            this.$btn_cancel.style.borderColor = "#ccc"
+            this.$btn_cancel.style.background = "#ba3545"
+            this.$btn_cancel.style.color = "#fff"
+            this.$input.forEach((inp) => {
+                inp.style.background = "#323a40"
+                inp.style.color = "#fff"
+                inp.style.borderColor = "#ccc"
+            })
         }
 
         return true
@@ -434,10 +462,26 @@ function popup()
         return obj
     }
 
+    obj.theme = val => {
+        obj._config.theme = val.toLocaleLowerCase()
+        return obj
+    }
+
+    obj.dark = () => {
+        obj.theme("dark")
+        return obj
+    }
+
+    obj.light = () => {
+        obj.theme("light")
+        return obj
+    }
+
     obj.show = () => {
         return new Promise((resolve, reject) => {
             const popup_js = document.createElement("popup-js")
-            const id = `id${parseInt(Math.random() * 9999999999999999)}`
+            const num_random = Math.random() * Math.random() * Math.random() * Math.random() * 9999999999999999
+            const id = `id${parseInt(num_random)}`
             popup_js.setAttribute("id", id)
             popup_js.setAttribute("data-config", JSON.stringify(obj._config))
             if (typeof(obj._content) == "string") {
