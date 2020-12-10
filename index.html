@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example of using the POPUP library</title>
+</head>
+<body>
+
+    <a href="https://github.com/matheusjohannaraujo/popup">Clique aqui para ir para o projeto no GitHub</a>
+
+    <!-- INCLUINDO BIBLIOTECA -->
+    <script src="popup.js"></script>
+
+    <!--#########################################-->
+
+    <!-- INÍCIO - USANDO ATRAVÉS DE TAG #########-->
+
+    <!-- USANDO ALERT -->
+    <popup-js data-config="{
+        'type': 'alert',
+        'seconds': 5,
+        'callback': 'console.log'
+    }">
+        <label slot="title">Alert</label>
+        <p slot="body">Olá, seja bem-vindo ao popup-js.</p>
+    </popup-js>
+
+    <!-- USANDO CONFIRM -->
+    <popup-js data-config="{
+        'type': 'confirm',
+        'seconds': 5,
+        'callback': 'console.log'
+    }">
+        <label slot="title">Confirm</label>
+        <label slot="body">Deseja continuar?</label>
+    </popup-js>
+
+    <!-- USANDO PROMPT -->
+    <popup-js data-config="{
+            'type': 'prompt',
+            'seconds': 5,
+            'callback': 'console.log',
+            'top': '50px',
+            'left': '50px',
+            'style': {
+                'color': '#000',
+                'background': '#fff'
+            }
+        }">
+        <label slot="title">Prompt</label>
+        <div slot="body">
+            <label>Qual o seu nome?</label>
+            <input type="text" placeholder="NOME" id="inp">
+        </div>
+    </popup-js>
+    
+    <!-- FIM - USANDO ATRAVÉS DE TAG ############-->
+
+    <!--#########################################-->
+
+    <!-- INÍCIO - USANDO ATRAVÉS DO JAVASCRIPT ##-->
+    
+    <script>
+        window.addEventListener("load", async () => {
+
+            // USANDO ALERT
+            await popup()
+                .alert()
+                .seconds(5)
+                .callback("console.log")
+                .title("Alert")
+                .body("Olá, seja bem-vindo ao popup-js.")
+                .show()
+
+            // USANDO CONFIRM
+            await popup()
+                .confirm()
+                .seconds(5)
+                .callback("console.log")
+                .title("Confirm")
+                .body("Deseja continuar?")
+                .show()
+
+            // USANDO PROMPT
+            await popup()
+                .config({
+                    'type': 'prompt',
+                    'seconds': 5,
+                    'callback': 'console.log',
+                    'top': '50px',
+                    'left': '50px',
+                    'style': {
+                        'color': '#000',
+                        'background': '#fff'
+                    }
+                })
+                .content(`
+                    <label slot="title">Prompt</label>
+                    <div slot="body">
+                        <label>Qual o seu nome?</label>
+                        <input type="text" placeholder="NOME" id="inp">
+                    </div>
+                `)    
+                .show()
+
+        }) 
+    </script>
+    
+    <!-- FIM - USANDO ATRAVÉS DO JAVASCRIPT #####-->
+
+</body>
+</html>
