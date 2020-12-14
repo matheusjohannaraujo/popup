@@ -2,12 +2,11 @@
 # [POPUP](https://github.com/matheusjohannaraujo/popup)
 
 ```javascript
-// DEVELOPER INFO
-const dev = {
+const DEVELOPER_INFO = {
     'autor': 'Matheus Johann Araújo',
     'country': 'Brasil',
     'state': 'Pernambuco',
-    'date': '2020-12-10'
+    'date': '2020-12-21'
 }
 ```
 
@@ -74,14 +73,27 @@ const dev = {
 
 #### O Web Component ```<popup-js>``` pode ser personalizado de diversas formas.
 
-#### É possível definir um:
+#### Funcionalidades do POPUP:
 
 * `style` -> Estilo CSS;
 * `top` -> Topo de cima;
 * `left` -> Lateral esquerda;
+* `body` -> Define o corpo do popup;
+* `title` -> Define o título do popup;
+* `content` -> Define o conteúdo para o popup;
 * `seconds` -> Tempo do popup em tela;
+* `btn_ok` -> Renomear o texto do botão OK;
+* `btn_cancel` -> Renomear o texto do botão Cancel;
+* `light` -> Define o tema do popup como light (claro);
+* `dark` -> Define o tema do popup como dark (escuro);
+* `theme` -> Define o tema do popup, dark (escuro) e light (claro);
+* `callback` -> Função chamada quando o popup sair da tela;
 * `type` -> alert, confirm e prompt são tipos de popup;
-* `callback` -> Função chamada quando o popup sair da tela.
+* `alert` -> Define o popup como tipo de alert (alerta);
+* `prompt` -> Define o popup como tipo de prompt (pergunta);
+* `confirm` -> Define o popup como tipo de confirm (confirmação);
+* `config` -> Objeto JSON que contém todas as configurações descritas acima;
+* `show` -> Função responsável por adicionar o popup para lista de exibição no navegador.
 
 #### Para utilizar as funcionalidades descritas acima, use o atributo `data-config="{}"`
 

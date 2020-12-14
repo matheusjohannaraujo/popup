@@ -4,7 +4,7 @@
 	Country: Brasil
 	State: Pernambuco
 	Developer: Matheus Johann Araujo
-	Date: 2020-12-10
+	Date: 2020-12-14
 */
 
 let global_array_popup = []
@@ -105,8 +105,8 @@ class POPUP extends HTMLElement {
                     <slot id="body" name="body" />
                 </div>
                 <div id="btns">
-                    <button id="btn_ok" title="Yes | Sim">OK</button>
-                    <button id="btn_cancel" title="No | Não">Cancelar</button>
+                    <button id="btn_ok">OK</button>
+                    <button id="btn_cancel">Cancel</button>
                 </div>
             </div>
         `
@@ -231,7 +231,7 @@ class POPUP extends HTMLElement {
         }
 
         this.$btn_ok.addEventListener("click", this.popup_btn_ok.bind(this))
-        this.$btn_cancel.addEventListener("click", this.popup_btn_cancel.bind(this))        
+        this.$btn_cancel.addEventListener("click", this.popup_btn_cancel.bind(this))
         let data_config = this.getAttribute("data-config") || null
 
         if (typeof(data_config) == "string" && data_config.length >= 2) {
@@ -241,6 +241,34 @@ class POPUP extends HTMLElement {
             } catch (e) {
                 data_config = null
             }
+        }
+
+        const lang = window.navigator.language
+
+        if (typeof(data_config?.btn_ok) == "undefined") {
+            data_config.btn_ok = {}
+            if (lang == "pt-BR") {
+                data_config.btn_ok = "OK"
+            } else {
+                data_config.btn_ok = "OK"
+            }
+        }
+
+        if (typeof(data_config?.btn_cancel) == "undefined") {
+            data_config.btn_cancel = {}
+            if (lang == "pt-BR") {
+                data_config.btn_cancel = "Cancelar"
+            } else {
+                data_config.btn_cancel = "Cancel"
+            }
+        }
+
+        if (typeof(data_config?.btn_ok) == "string") {
+            this.$btn_ok.innerHTML = data_config.btn_ok
+        }
+
+        if (typeof(data_config?.btn_cancel) == "string") {
+            this.$btn_cancel.innerHTML = data_config.btn_cancel
         }
 
         if (typeof(data_config?.style) != "undefined") {
@@ -464,6 +492,16 @@ function popup()
 
     obj.theme = val => {
         obj._config.theme = val.toLocaleLowerCase()
+        return obj
+    }
+
+    obj.btn_ok = val => {
+        obj._config.btn_ok = val
+        return obj
+    }
+
+    obj.btn_cancel = val => {
+        obj._config.btn_cancel = val
         return obj
     }
 
